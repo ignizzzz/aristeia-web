@@ -158,11 +158,21 @@ body{
   margin-bottom:1rem;
   width:100%;
   max-width:380px;
+  position:relative;
 }
 
 .fr{
   display:flex;
   width:100%;
+}
+
+.hp{
+  position:absolute !important;
+  left:-9999px !important;
+  width:1px !important;
+  height:1px !important;
+  opacity:0 !important;
+  pointer-events:none !important;
 }
 
 .fr input{
@@ -311,14 +321,15 @@ body{
     <div class="cb"><span class="cn" id="ss">00</span><span class="cl">Seconds</span></div>
   </div>
   
-  <div class="fm" id="form">
+  <form class="fm" id="form" novalidate>
+    <input class="hp" type="text" id="company" name="company" tabindex="-1" autocomplete="off" aria-hidden="true">
     <div class="fr">
       <input type="email" id="email" placeholder="Enter your email to be notified" autocomplete="email" required>
-      <button type="button" id="btn">Notify Me</button>
+      <button type="submit" id="btn">Notify Me</button>
     </div>
     <p class="fn">Be the first to know when we launch. No spam.</p>
     <p class="ok">Thank you. We will be in touch.</p>
-  </div>
+  </form>
 </div>
 
 <div class="bt">
@@ -343,23 +354,57 @@ tick();
 setInterval(tick, 1000);
 
 // Email signup
-document.getElementById('btn').addEventListener('click', function() {
-  const input = document.getElementById('email');
-  const form = document.getElementById('form');
-  const email = input.value.trim();
-  
-  if (email && email.includes('@') && email.includes('.')) {
-    form.classList.add('sent');
-  } else {
-    input.style.borderColor = '#c0a080';
-    setTimeout(function() { input.style.borderColor = ''; }, 1500);
-  }
-});
+const formEl = document.getElementById('form');
+const emailEl = document.getElementById('email');
+const buttonEl = document.getElementById('btn');
+const honeypotEl = document.getElementById('company');
 
-// Also handle Enter key
-document.getElementById('email').addEventListener('keydown', function(e) {
-  if (e.key === 'Enter') {
-    document.getElementById('btn').click();
+function setTemporaryError(message) {
+  const note = document.querySelector('.fn');
+  const original = note.textContent;
+  note.textContent = message;
+  note.style.color = '#9a6f54';
+  setTimeout(function() {
+    note.textContent = original;
+    note.style.color = '';
+  }, 2500);
+}
+
+formEl.addEventListener('submit', async function(e) {
+  e.preventDefault();
+
+  const email = emailEl.value.trim().toLowerCase();
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  if (!emailRegex.test(email)) {
+    emailEl.style.borderColor = '#c0a080';
+    setTimeout(function() { emailEl.style.borderColor = ''; }, 1500);
+    return;
+  }
+
+  buttonEl.disabled = true;
+  buttonEl.textContent = 'Sending...';
+
+  try {
+    const response = await fetch('/api/subscribe', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: email, company: honeypotEl.value || '' })
+    });
+
+    const data = await response.json().catch(function() { return {}; });
+
+    if (!response.ok || !data.ok) {
+      throw new Error(data.error || 'Something went wrong. Please try again.');
+    }
+
+    formEl.classList.add('sent');
+  } catch (err) {
+    setTemporaryError(err.message || 'Could not subscribe right now.');
+    emailEl.style.borderColor = '#c0a080';
+    setTimeout(function() { emailEl.style.borderColor = ''; }, 1500);
+    buttonEl.disabled = false;
+    buttonEl.textContent = 'Notify Me';
   }
 });
 </script>
