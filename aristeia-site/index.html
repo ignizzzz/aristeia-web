@@ -1,413 +1,489 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<meta name="theme-color" content="#eceae4">
-<meta name="description" content="ARISTEIA. The Greek Way of Excellence. A Mediterranean brand curating limited harvests from the finest terroirs of Greece.">
-<meta property="og:title" content="ARISTEIA">
-<meta property="og:description" content="The first collection is coming. Three Greek ingredients. Released in limited quantities.">
-<meta property="og:type" content="website">
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ctext x='50%25' y='50%25' dominant-baseline='central' text-anchor='middle' font-family='serif' font-size='24' fill='%232a2a26'%3EA%3C/text%3E%3C/svg%3E">
-<title>ARISTEIA</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;1,300;1,400&family=Instrument+Sans:wght@400;500&display=swap" rel="stylesheet">
-<style>
-@font-face{font-family:'Cinzel';font-weight:400;font-display:swap;src:url(https://fonts.gstatic.com/s/cinzel/v23/8vIU7ww63mVu7gtR-kwKxNvkNOjw-tbnfY3lCA.woff2) format('woff2')}
-
-*{margin:0;padding:0;box-sizing:border-box}
-html{font-size:16px;-webkit-text-size-adjust:100%}
-body{
-  background:#eceae4;
-  color:#2a2a26;
-  font-family:'Instrument Sans',sans-serif;
-  -webkit-font-smoothing:antialiased;
-  -moz-osx-font-smoothing:grayscale;
-  overflow:hidden;
-  height:100vh;height:100dvh;
-  position:relative;
-}
-
-/* Noise texture */
-.noise{
-  position:fixed;inset:0;pointer-events:none;z-index:100;opacity:.02;
-  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-}
-
-/* Frame lines — desktop only */
-@media(min-width:769px){
-  body::before,body::after{
-    content:'';position:fixed;top:0;bottom:0;width:1px;
-    z-index:99;pointer-events:none;background:rgba(42,42,38,.04);
-  }
-  body::before{left:4vw}
-  body::after{right:4vw}
-}
-
-/* ── Monogram ── */
-.mono{
-  position:fixed;
-  top:50%;left:50%;
-  transform:translate(-50%,-50%);
-  font-family:'Cinzel',serif;
-  font-weight:400;
-  line-height:.82;
-  color:rgba(42,42,38,.03);
-  pointer-events:none;
-  z-index:0;
-  user-select:none;
-  font-size:clamp(28rem,52vw,52rem);
-}
-
-/* ── Main layout ── */
-.page{
-  position:relative;z-index:10;
-  height:100vh;height:100dvh;
-  display:flex;flex-direction:column;
-  align-items:center;justify-content:center;
-  text-align:center;
-  padding:2rem 1.5rem;
-}
-
-/* ── Brand ── */
-.by{
-  font-family:'Cormorant',serif;
-  font-style:italic;font-weight:300;
-  font-size:.95rem;
-  color:#a5a098;
-  letter-spacing:.05em;
-  opacity:0;animation:in .8s .3s ease forwards;
-}
-
-.name{
-  font-family:'Cinzel',serif;
-  font-size:clamp(1.8rem,5vw,3.8rem);
-  font-weight:400;
-  letter-spacing:clamp(.15em,3vw,.28em);
-  text-transform:uppercase;
-  line-height:1;
-  margin:.15rem 0 0;
-  opacity:0;animation:in 1s .5s ease forwards;
-}
-
-.rule{
-  width:1px;height:32px;
-  background:linear-gradient(transparent,#ccc8c0,transparent);
-  margin:1.8rem auto;
-  opacity:0;animation:in .5s 1s ease forwards;
-}
-
-.tag{
-  font-family:'Cormorant',serif;
-  font-style:italic;font-weight:300;
-  font-size:clamp(.9rem,1.5vw,1.12rem);
-  color:#7a7770;
-  line-height:1.6;
-  max-width:340px;
-  margin:0 auto 2.5rem;
-  opacity:0;animation:in .6s 1.2s ease forwards;
-}
-
-/* ── Countdown ── */
-.cd{
-  display:flex;
-  justify-content:center;
-  gap:clamp(.8rem,3vw,2.8rem);
-  margin-bottom:2.5rem;
-  opacity:0;animation:in .7s 1.5s ease forwards;
-}
-
-.cb{
-  display:flex;flex-direction:column;align-items:center;
-  min-width:clamp(44px,12vw,68px);
-}
-
-.cn{
-  font-family:'Cinzel',serif;
-  font-size:clamp(1.5rem,4vw,2.8rem);
-  font-weight:400;
-  letter-spacing:.04em;
-  line-height:1;
-  margin-bottom:.35rem;
-}
-
-.cl{
-  font-size:clamp(.38rem,.9vw,.44rem);
-  font-weight:500;
-  letter-spacing:.25em;
-  text-transform:uppercase;
-  color:#ccc8c0;
-}
-
-.cs{
-  display:flex;align-items:center;
-  padding-bottom:.9rem;
-}
-
-.cs i{
-  display:block;
-  width:2px;height:2px;
-  border-radius:50%;
-  background:#ccc8c0;
-}
-
-/* ── Email form ── */
-.fm{
-  opacity:0;animation:in .6s 1.8s ease forwards;
-  margin-bottom:1rem;
-  width:100%;
-  max-width:380px;
-  position:relative;
-}
-
-.fr{
-  display:flex;
-  width:100%;
-}
-
-.hp{
-  position:absolute !important;
-  left:-9999px !important;
-  width:1px !important;
-  height:1px !important;
-  opacity:0 !important;
-  pointer-events:none !important;
-}
-
-.fr input{
-  flex:1;
-  font-family:'Instrument Sans',sans-serif;
-  font-size:16px; /* prevents iOS zoom */
-  padding:.75rem 1rem;
-  background:rgba(236,234,228,.9);
-  border:1px solid #ccc8c0;
-  border-right:none;
-  border-radius:0; /* iOS fix */
-  color:#2a2a26;
-  outline:none;
-  transition:border-color .3s;
-  -webkit-appearance:none;
-  appearance:none;
-}
-
-.fr input::placeholder{color:#a5a098}
-.fr input:focus{border-color:#7a7770}
-
-.fr button{
-  font-family:'Instrument Sans',sans-serif;
-  font-size:.5rem;
-  font-weight:500;
-  letter-spacing:.16em;
-  text-transform:uppercase;
-  padding:.75rem 1.4rem;
-  background:#2a2a26;
-  color:#eceae4;
-  border:1px solid #2a2a26;
-  border-radius:0;
-  cursor:pointer;
-  transition:all .3s;
-  white-space:nowrap;
-  -webkit-appearance:none;
-  appearance:none;
-  -webkit-tap-highlight-color:transparent;
-}
-
-.fr button:hover,
-.fr button:active{
-  background:#b8a078;
-  border-color:#b8a078;
-  color:#2a2a26;
-}
-
-.fn{
-  font-size:.44rem;
-  color:#ccc8c0;
-  margin-top:.6rem;
-  letter-spacing:.02em;
-}
-
-/* Success state */
-.fm.sent .fr{display:none}
-.fm .ok{display:none;font-family:'Cormorant',serif;font-style:italic;font-size:1rem;color:#7a7770}
-.fm.sent .ok{display:block}
-
-/* ── Bottom bar ── */
-.bt{
-  position:fixed;
-  bottom:0;left:0;right:0;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:1.5rem clamp(1.5rem,4vw,3rem);
-  z-index:10;
-  opacity:0;animation:in .4s 2s ease forwards;
-}
-
-.bt span{
-  font-size:clamp(.38rem,.7vw,.44rem);
-  font-weight:400;
-  letter-spacing:.22em;
-  text-transform:uppercase;
-  color:#ccc8c0;
-}
-
-.bt .m{
-  font-family:'Cormorant',serif;
-  font-style:italic;
-  font-size:clamp(.65rem,1vw,.75rem);
-  letter-spacing:.02em;
-  color:#a5a098;
-}
-
-@keyframes in{
-  from{opacity:0;transform:translateY(10px)}
-  to{opacity:1;transform:translateY(0)}
-}
-
-/* ── Mobile adjustments ── */
-@media(max-width:768px){
-  .page{
-    padding:1.5rem 1.2rem;
-    justify-content:center;
-  }
-  
-  .rule{height:24px;margin:1.4rem auto}
-  .tag{margin-bottom:2rem;max-width:300px}
-  .cd{margin-bottom:2rem}
-  
-  .bt{
-    flex-direction:column;
-    gap:.25rem;
-    padding:1rem;
-  }
-  .bt span:first-child,
-  .bt span:last-child{display:none}
-}
-
-/* Small phones */
-@media(max-width:380px){
-  .name{font-size:1.6rem}
-  .cn{font-size:1.3rem}
-  .tag{font-size:.85rem}
-  .by{font-size:.85rem}
-}
-
-/* Safe area for notch phones */
-@supports(padding:max(0px)){
-  .page{padding-top:max(2rem,env(safe-area-inset-top))}
-  .bt{padding-bottom:max(1.5rem,env(safe-area-inset-bottom))}
-}
-</style>
-</head>
-<body>
-
-<div class="noise"></div>
-<div class="mono" aria-hidden="true">A</div>
-
-<div class="page">
-  <p class="by">by</p>
-  <h1 class="name">Aristeia</h1>
-  <div class="rule"></div>
-  <p class="tag">The first collection is coming.<br>Three Greek ingredients. Released in limited quantities.</p>
-  
-  <div class="cd" role="timer" aria-label="Countdown to launch">
-    <div class="cb"><span class="cn" id="dd">00</span><span class="cl">Days</span></div>
-    <div class="cs"><i></i></div>
-    <div class="cb"><span class="cn" id="hh">00</span><span class="cl">Hours</span></div>
-    <div class="cs"><i></i></div>
-    <div class="cb"><span class="cn" id="mm">00</span><span class="cl">Minutes</span></div>
-    <div class="cs"><i></i></div>
-    <div class="cb"><span class="cn" id="ss">00</span><span class="cl">Seconds</span></div>
-  </div>
-  
-  <form class="fm" id="form" novalidate>
-    <input class="hp" type="text" id="company" name="company" tabindex="-1" autocomplete="off" aria-hidden="true">
-    <div class="fr">
-      <input type="email" id="email" placeholder="Enter your email to be notified" autocomplete="email" required>
-      <button type="submit" id="btn">Notify Me</button>
-    </div>
-    <p class="fn">Be the first to know when we launch. No spam.</p>
-    <p class="ok">Thank you. We will be in touch.</p>
-  </form>
-</div>
-
-<div class="bt">
-  <span>Zürich, Switzerland</span>
-  <span class="m">The Greek Way of Excellence</span>
-  <span>Est. 2026</span>
-</div>
-
-<script>
-// Countdown — March 28, 2026 00:00 CET
-const T = new Date('2026-03-28T00:00:00+01:00').getTime();
-
-function tick() {
-  const r = Math.max(0, T - Date.now());
-  document.getElementById('dd').textContent = String(Math.floor(r / 864e5)).padStart(2, '0');
-  document.getElementById('hh').textContent = String(Math.floor(r % 864e5 / 36e5)).padStart(2, '0');
-  document.getElementById('mm').textContent = String(Math.floor(r % 36e5 / 6e4)).padStart(2, '0');
-  document.getElementById('ss').textContent = String(Math.floor(r % 6e4 / 1e3)).padStart(2, '0');
-}
-
-tick();
-setInterval(tick, 1000);
-
-// Email signup
-const formEl = document.getElementById('form');
-const emailEl = document.getElementById('email');
-const buttonEl = document.getElementById('btn');
-const honeypotEl = document.getElementById('company');
-
-function setTemporaryError(message) {
-  const note = document.querySelector('.fn');
-  const original = note.textContent;
-  note.textContent = message;
-  note.style.color = '#9a6f54';
-  setTimeout(function() {
-    note.textContent = original;
-    note.style.color = '';
-  }, 2500);
-}
-
-formEl.addEventListener('submit', async function(e) {
-  e.preventDefault();
-
-  const email = emailEl.value.trim().toLowerCase();
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-  if (!emailRegex.test(email)) {
-    emailEl.style.borderColor = '#c0a080';
-    setTimeout(function() { emailEl.style.borderColor = ''; }, 1500);
-    return;
-  }
-
-  buttonEl.disabled = true;
-  buttonEl.textContent = 'Sending...';
-
-  try {
-    const response = await fetch('/api/subscribe', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email: email, company: honeypotEl.value || '' })
-    });
-
-    const data = await response.json().catch(function() { return {}; });
-
-    if (!response.ok || !data.ok) {
-      throw new Error(data.error || 'Something went wrong. Please try again.');
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aristeia Admin</title>
+  <style>
+    :root {
+      --bg: #f2f0ea;
+      --card: #ffffff;
+      --text: #22211f;
+      --muted: #6e6a63;
+      --line: #dfdbd3;
+      --accent: #2d2b28;
+      --accent-soft: #b39a72;
+      --danger: #9a4e3f;
     }
 
-    formEl.classList.add('sent');
-  } catch (err) {
-    setTemporaryError(err.message || 'Could not subscribe right now.');
-    emailEl.style.borderColor = '#c0a080';
-    setTimeout(function() { emailEl.style.borderColor = ''; }, 1500);
-    buttonEl.disabled = false;
-    buttonEl.textContent = 'Notify Me';
-  }
-});
-</script>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text);
+      background: var(--bg);
+    }
 
+    .wrap {
+      width: min(1080px, 92vw);
+      margin: 2.2rem auto;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 1.2rem;
+      box-shadow: 0 8px 28px rgba(25, 20, 10, 0.06);
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 1.2rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.8rem;
+      flex-wrap: wrap;
+    }
+
+    .muted {
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .stack {
+      display: grid;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .hidden { display: none !important; }
+
+    label {
+      display: block;
+      font-size: 0.84rem;
+      color: var(--muted);
+      margin-bottom: 0.35rem;
+    }
+
+    input {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 0.7rem 0.8rem;
+      font-size: 0.95rem;
+      background: #fff;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: var(--accent-soft);
+    }
+
+    button {
+      border: 1px solid var(--accent);
+      background: var(--accent);
+      color: #f4f1eb;
+      border-radius: 10px;
+      padding: 0.62rem 0.95rem;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      cursor: pointer;
+    }
+
+    button.secondary {
+      background: transparent;
+      color: var(--accent);
+    }
+
+    button:disabled {
+      opacity: 0.65;
+      cursor: not-allowed;
+    }
+
+    .notice {
+      min-height: 1.2rem;
+      font-size: 0.86rem;
+      color: var(--muted);
+    }
+
+    .notice.error { color: var(--danger); }
+    .notice.success { color: #3f7a50; }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.8rem;
+    }
+
+    .metric {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 0.8rem;
+      background: #fff;
+    }
+
+    .metric .label {
+      font-size: 0.75rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .metric .value {
+      margin-top: 0.35rem;
+      font-size: 1.15rem;
+      font-weight: 600;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    th, td {
+      text-align: left;
+      padding: 0.72rem 0.85rem;
+      border-bottom: 1px solid var(--line);
+      font-size: 0.9rem;
+    }
+
+    th {
+      font-size: 0.74rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--muted);
+      background: #faf8f4;
+    }
+
+    tr:last-child td { border-bottom: 0; }
+
+    @media (max-width: 880px) {
+      .grid { grid-template-columns: 1fr; }
+      th:nth-child(3), td:nth-child(3) { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap stack">
+    <section class="card row">
+      <div>
+        <h1>Aristeia Admin</h1>
+        <p class="muted">Waitlist management dashboard</p>
+      </div>
+      <button id="logoutBtn" class="secondary hidden" type="button">Log Out</button>
+    </section>
+
+    <section id="loginCard" class="card stack">
+      <div>
+        <label for="loginEmail">Admin email</label>
+        <input id="loginEmail" type="email" autocomplete="email" placeholder="you@brand.com">
+      </div>
+      <div class="row">
+        <button id="sendLinkBtn" type="button">Send Magic Link</button>
+      </div>
+      <p id="loginNotice" class="notice"></p>
+    </section>
+
+    <section id="dashboard" class="stack hidden">
+      <section class="card stack">
+        <div class="grid">
+          <div class="metric">
+            <div class="label">Total Signups</div>
+            <div id="totalCount" class="value">0</div>
+          </div>
+          <div class="metric">
+            <div class="label">Filtered Results</div>
+            <div id="filteredCount" class="value">0</div>
+          </div>
+          <div class="metric">
+            <div class="label">Latest Signup</div>
+            <div id="latestSignup" class="value">-</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="card stack">
+        <div class="row">
+          <div style="flex: 1 1 320px;">
+            <label for="searchInput">Search</label>
+            <input id="searchInput" type="text" placeholder="Type email or source">
+          </div>
+          <div class="row">
+            <button id="refreshBtn" class="secondary" type="button">Refresh</button>
+            <button id="exportBtn" type="button">Export CSV</button>
+          </div>
+        </div>
+        <p id="dashboardNotice" class="notice"></p>
+        <table>
+          <thead>
+            <tr>
+              <th>Email</th>
+              <th>Created At</th>
+              <th>Source</th>
+            </tr>
+          </thead>
+          <tbody id="tableBody">
+            <tr>
+              <td colspan="3" class="muted">No data yet.</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+    </section>
+  </main>
+
+  <script type="module">
+    import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+
+    const loginCard = document.getElementById("loginCard");
+    const dashboard = document.getElementById("dashboard");
+    const loginEmail = document.getElementById("loginEmail");
+    const sendLinkBtn = document.getElementById("sendLinkBtn");
+    const logoutBtn = document.getElementById("logoutBtn");
+    const loginNotice = document.getElementById("loginNotice");
+    const dashboardNotice = document.getElementById("dashboardNotice");
+    const searchInput = document.getElementById("searchInput");
+    const refreshBtn = document.getElementById("refreshBtn");
+    const exportBtn = document.getElementById("exportBtn");
+    const tableBody = document.getElementById("tableBody");
+    const totalCount = document.getElementById("totalCount");
+    const filteredCount = document.getElementById("filteredCount");
+    const latestSignup = document.getElementById("latestSignup");
+
+    const state = {
+      supabase: null,
+      rows: [],
+      filteredRows: []
+    };
+
+    function setNotice(element, message, type = "") {
+      element.className = `notice${type ? ` ${type}` : ""}`;
+      element.textContent = message;
+    }
+
+    function formatDate(value) {
+      if (!value) return "-";
+      const d = new Date(value);
+      if (Number.isNaN(d.getTime())) return "-";
+      return d.toLocaleString();
+    }
+
+    function renderRows() {
+      const rows = state.filteredRows;
+      filteredCount.textContent = String(rows.length);
+      latestSignup.textContent = state.rows[0] ? formatDate(state.rows[0].created_at) : "-";
+
+      if (rows.length === 0) {
+        tableBody.innerHTML = '<tr><td colspan="3" class="muted">No matches found.</td></tr>';
+        return;
+      }
+
+      tableBody.innerHTML = rows.map((row) => {
+        return `
+          <tr>
+            <td>${row.email}</td>
+            <td>${formatDate(row.created_at)}</td>
+            <td>${row.source || "-"}</td>
+          </tr>
+        `;
+      }).join("");
+    }
+
+    function applySearch() {
+      const q = searchInput.value.trim().toLowerCase();
+      if (!q) {
+        state.filteredRows = [...state.rows];
+      } else {
+        state.filteredRows = state.rows.filter((row) => {
+          return (row.email || "").toLowerCase().includes(q)
+            || (row.source || "").toLowerCase().includes(q);
+        });
+      }
+      renderRows();
+    }
+
+    function downloadCsv() {
+      const rows = state.filteredRows;
+      if (!rows.length) {
+        setNotice(dashboardNotice, "There is no data to export.", "error");
+        return;
+      }
+
+      const header = ["email", "created_at", "source"];
+      const csvLines = [header.join(",")];
+      for (const row of rows) {
+        const line = [
+          row.email || "",
+          row.created_at || "",
+          row.source || ""
+        ].map((cell) => `"${String(cell).replace(/"/g, '""')}"`).join(",");
+        csvLines.push(line);
+      }
+
+      const blob = new Blob([csvLines.join("\n")], { type: "text/csv;charset=utf-8;" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `waitlist-${new Date().toISOString().slice(0, 10)}.csv`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      setNotice(dashboardNotice, "CSV exported.", "success");
+    }
+
+    async function loadRows() {
+      setNotice(dashboardNotice, "Loading waitlist...");
+      refreshBtn.disabled = true;
+      exportBtn.disabled = true;
+
+      const { data, error } = await state.supabase
+        .from("aristeia_waitlist")
+        .select("id,email,source,created_at")
+        .order("created_at", { ascending: false })
+        .limit(2000);
+
+      refreshBtn.disabled = false;
+      exportBtn.disabled = false;
+
+      if (error) {
+        setNotice(dashboardNotice, error.message || "Could not load waitlist.", "error");
+        return;
+      }
+
+      state.rows = Array.isArray(data) ? data : [];
+      state.filteredRows = [...state.rows];
+      totalCount.textContent = String(state.rows.length);
+      renderRows();
+      setNotice(dashboardNotice, `Loaded ${state.rows.length} email records.`, "success");
+    }
+
+    async function ensureActiveAdmin(userId) {
+      const { data, error } = await state.supabase
+        .from("admin_users")
+        .select("user_id,is_active")
+        .eq("user_id", userId)
+        .single();
+
+      if (error || !data || data.is_active !== true) {
+        return false;
+      }
+      return true;
+    }
+
+    async function showDashboard() {
+      loginCard.classList.add("hidden");
+      dashboard.classList.remove("hidden");
+      logoutBtn.classList.remove("hidden");
+      await loadRows();
+    }
+
+    async function showLogin(message = "") {
+      dashboard.classList.add("hidden");
+      logoutBtn.classList.add("hidden");
+      loginCard.classList.remove("hidden");
+      if (message) {
+        setNotice(loginNotice, message, "error");
+      }
+    }
+
+    async function initClient() {
+      const response = await fetch("/api/admin-config");
+      const config = await response.json().catch(() => ({}));
+      if (!response.ok || !config.ok) {
+        throw new Error(config.error || "Admin config is not available.");
+      }
+
+      state.supabase = createClient(config.supabaseUrl, config.supabaseAnonKey, {
+        auth: {
+          persistSession: true,
+          autoRefreshToken: true
+        }
+      });
+    }
+
+    async function initAuthFlow() {
+      const { data: authData } = await state.supabase.auth.getSession();
+      const session = authData.session;
+
+      if (!session || !session.user) {
+        await showLogin();
+        return;
+      }
+
+      const allowed = await ensureActiveAdmin(session.user.id);
+      if (!allowed) {
+        await state.supabase.auth.signOut();
+        await showLogin("Your account is not authorized for admin access.");
+        return;
+      }
+
+      await showDashboard();
+    }
+
+    sendLinkBtn.addEventListener("click", async () => {
+      const email = loginEmail.value.trim().toLowerCase();
+      if (!email || !email.includes("@")) {
+        setNotice(loginNotice, "Enter a valid admin email.", "error");
+        return;
+      }
+
+      sendLinkBtn.disabled = true;
+      setNotice(loginNotice, "Sending magic link...");
+      const { error } = await state.supabase.auth.signInWithOtp({
+        email,
+        options: {
+          emailRedirectTo: `${window.location.origin}/admin/`
+        }
+      });
+      sendLinkBtn.disabled = false;
+
+      if (error) {
+        setNotice(loginNotice, error.message || "Could not send magic link.", "error");
+        return;
+      }
+
+      setNotice(loginNotice, "Magic link sent. Check your inbox.", "success");
+    });
+
+    logoutBtn.addEventListener("click", async () => {
+      await state.supabase.auth.signOut();
+      await showLogin();
+      setNotice(loginNotice, "You are logged out.", "success");
+    });
+
+    refreshBtn.addEventListener("click", loadRows);
+    exportBtn.addEventListener("click", downloadCsv);
+    searchInput.addEventListener("input", applySearch);
+
+    try {
+      await initClient();
+      await initAuthFlow();
+      state.supabase.auth.onAuthStateChange(async (event) => {
+        if (event === "SIGNED_IN") {
+          await initAuthFlow();
+        }
+        if (event === "SIGNED_OUT") {
+          await showLogin();
+        }
+      });
+    } catch (error) {
+      setNotice(loginNotice, error.message || "Admin is not configured yet.", "error");
+      await showLogin();
+    }
+  </script>
+  <script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>
